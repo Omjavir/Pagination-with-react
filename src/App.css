@@ -1,4 +1,4 @@
-.heading{
+.heading {
   display: flex;
   justify-content: center;
   margin: auto;
@@ -48,5 +48,56 @@
 }
 
 .pagination__selected {
-  background-color: rgb(220, 220, 220);
+  background-color: rgb(169, 163, 163);
+}
+
+@media (width < 600px) {
+  .products {
+    margin: 10px;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .products__single {
+    height: 250px;
+    width: 140px;
+    list-style: none;
+    padding: 10px;
+    background-color: rgb(220, 220, 220);
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer; /* Imp on clickables */
+  }
+
+  .products__single > img {
+    width: 100%;
+    height: 90%;
+    object-fit: cover;
+    margin-bottom: 3px;
+  }
+
+  .pagination {
+    padding: 5px;
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pagination > span {
+    padding:8px;
+    border: 1px solid gray;
+    cursor: pointer;
+  }
+
+  .pagination__disable {
+    opacity: 0;
+  }
+
+  .pagination__selected {
+    background-color: rgb(164, 161, 161);
+  }
 }

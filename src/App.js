@@ -1,31 +1,23 @@
-import { useEffect, useState } from 'react';
-import './App.css';
+import './App.css'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
-function App() {
-  const [products, setProducts] = useState([])
-  const [page, setPage] = useState(1)
-
+const App = () => {
+  const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
   const fetchProducts = async () => {
-    const res = await fetch(`https://dummyjson.com/products?limit=100`)
-    const data = await res.json()
-
-    console.log(data);
-
-    if (data && data.products) {
-      setProducts(data.products)
-    }
+    const data = await axios.get('https://dummyjson.com/products?limit=100')
+    // console.log(data.data.products);
+    setProducts(data.data.products)
   }
-
   useEffect(() => {
-    fetchProducts()
+    fetchProducts();
   }, [])
-
   const selectPageHandler = (selectedPage) => {
     if (selectedPage >= 1 && selectedPage <= products.length / 10 && selectedPage !== page) {
-      setPage(selectedPage)
+      setPage(selectedPage);
     }
   }
-
   return (
     <div>
       <div className='heading'>
@@ -41,18 +33,17 @@ function App() {
           </span>
         })}
       </div>}
-
-      {products.length > 0 && <div className="pagination">
-        <span onClick={() => selectPageHandler(page - 1)} className={page > 1 ? "" : "pagination__disable"}>◀</span>
-
-        {[...Array(products.length / 10)].map((_, i) => {
-          return <span key={i} className={page === i + 1 ? "pagination__selected" : ""} onClick={() => selectPageHandler(i + 1)}>{i + 1}</span>
-        })}
-
-        <span onClick={() => selectPageHandler(page + 1)} className={page < products.length / 10 ? "" : "pagination__disable"}>▶</span>
-      </div>}
+      {
+        products.length > 0 && <div className="pagination">
+          <span className={page === 1 ? "pagination__disable" : ""} onClick={() => selectPageHandler(page - 1)}>◀</span>
+          {[...Array(products.length / 10)].map((_, i) => {
+            return <span className={page === i + 1 ? "pagination__selected" : ""} key={i} onClick={() => selectPageHandler(i + 1)}>{i + 1}</span>
+          })}
+          <span className={page === 10 ? "pagination__disable" : ""} onClick={() => selectPageHandler(page + 1)}>▶</span>
+        </div>
+      }
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
